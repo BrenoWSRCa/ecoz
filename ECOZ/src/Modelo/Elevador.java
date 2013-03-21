@@ -1,24 +1,25 @@
 package Modelo;
 
-import java.util.Observer;
+import Controle.Controlador;
 
 public class Elevador extends IElevador{
-	protected Andar andarAtual;
+        protected Predio predio;
+        protected int andarAtual;
 	protected Direção direçãoAtual;
 	protected boolean porta; // porta é true quando está aberta e false quando fechada
 	
 	private Controlador controlador;
 	
-	public Elevador(){
+	public Elevador(Predio predio){
 		super();
-		andarAtual = Andar.Térreo;
+                this.predio = predio;
+                andarAtual = 0;
 		direçãoAtual = Direção.PARADO;
 		porta = false;//fechada
-		controlador = new Controlador(this, "Simulação do Elevador");
-		controlador.start();
 	}
 	
-	public Andar qual_andar() {
+    @Override
+	public int qual_andar() {
 		return andarAtual;
 	}
 
@@ -33,7 +34,7 @@ public class Elevador extends IElevador{
 	}
 
 	@Override
-	public void chama(Andar andar) {
+	public void chama(int i) {
                 direçãoAtual = Direção.SUBINDO;
                 setChanged();
                 notifyObservers();

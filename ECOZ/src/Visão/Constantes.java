@@ -18,6 +18,6 @@ public interface Constantes {
 		NUM_DE_QUADROS_EMBARQUE    =   4,
 		NUM_DE_QUADROS_DESEMBARQUE =   4;
 	
-	String	PREDIO   = "elevadorpredio1.png",
-			ELEVADOR = "elevador1.png";
+	String	PREDIO   = "predio_01.png",
+		ELEVADOR = "elevador1.png";
 }

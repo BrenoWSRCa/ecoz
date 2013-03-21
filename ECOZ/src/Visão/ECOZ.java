@@ -1,9 +1,10 @@
 package Visão;
 
 
-import Modelo.Controlador;
+import Controle.Controlador;
 import Modelo.Direção;
 import Modelo.IElevador;
+import Modelo.Predio;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -27,13 +28,15 @@ public class ECOZ extends JFrame implements Observer{
 
         tela = new Tela();
         predio = new Imagem(Constantes.PREDIO, 0, 0);
-        elevador_anim = new Animacao(Constantes.ELEVADOR,4, 51, 370, 316);
+        predio.setSize(Constantes.LARGURA_DA_JANELA, Constantes.ALTURA_DA_JANELA);
+        elevador_anim = new Animacao(Constantes.ELEVADOR, 4, 51, 370, 316);
         tela.adiciona_Desenhavel(predio);
         tela.adiciona_Desenhavel(elevador_anim);
-        
-        elevador = new Modelo.Elevador();
+        String andares[] = {"Térreo", "Primeiro", "Segundo", "Terceiro"};
+        Predio predio = new Predio(andares);
+        elevador = new Modelo.Elevador(predio);
         elevador.addObserver(this);
-        new Controlador(elevador, "Teste");
+        new Controlador(elevador, predio, "Teste").start();
         this.add(tela);
         tela.repaint();
 	}
