@@ -9,6 +9,12 @@ public abstract class IElevador extends Observable{
 	public abstract Direção qual_direção();
 	
 	public abstract boolean porta_esta_aberta();
+        
+        public abstract int quant_embarcados();
+        
+        public abstract void incrementa_quant_embarcados();
+        
+        public abstract void decrementa_quant_embarcados();
 	
 	public abstract void chama(int andar); //chama elevador para este andar
 	
