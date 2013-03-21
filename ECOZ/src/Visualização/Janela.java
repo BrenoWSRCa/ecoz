@@ -1,7 +1,7 @@
 package Visualização;
 
 import Controle.ControladorDeElevador;
-import Modelo.Ações;
+import Modelo.MensagensElevador;
 import Modelo.Direção;
 import Modelo.IElevador;
 import Modelo.Prédio;
@@ -29,14 +29,14 @@ public class Janela extends JFrame implements Observer {
         tela = new Tela();
         predio = new Imagem(Constantes.PREDIO, 0, 0);
         predio.setSize(Constantes.LARGURA_DA_JANELA, Constantes.ALTURA_DA_JANELA);
-        elevador_anim = new Animacao(Constantes.ELEVADOR, 4, 51, 370, 316);
+        elevador_anim = new Animacao(Constantes.ELEVADOR, 4, 51, 387, 383);
         tela.adiciona_Desenhavel(predio);
         tela.adiciona_Desenhavel(elevador_anim);
         String andares[] = {"Térreo", "Primeiro", "Segundo", "Terceiro"};
         Prédio predio = new Prédio(andares);
         elevador = new Modelo.Elevador(predio);
         elevador.addObserver(this);
-        new ControladorDeElevador(elevador, predio, "Teste").start();
+        //new ControladorDeElevador(elevador, predio, "Teste").start();
         this.add(tela);
         tela.repaint();
     }
@@ -57,6 +57,7 @@ public class Janela extends JFrame implements Observer {
         }
         this.tela.pega_Desenhavel(indice).y = y;
         this.tela.repaint();
+        System.out.println("Subindo");
     }
 
     public void desce_elevador(int indice) { // indice = quantidade de andares
@@ -74,6 +75,7 @@ public class Janela extends JFrame implements Observer {
             }
         }
         this.tela.pega_Desenhavel(indice).y = y;
+        System.out.println("Descendo\n");
         this.tela.repaint();
     }
 
@@ -85,11 +87,8 @@ public class Janela extends JFrame implements Observer {
         while (i < Constantes.NUM_DE_QUADROS_EMBARQUE - 1) {
             try {
                 Thread.currentThread().sleep(delta);
-            } catch (InterruptedException e) {
-            }
+            } catch (InterruptedException e) {}
             elevador.adianta_quadro();
-            this.tela.repaint();
-            System.out.format("Abrindo porta %d", i);
             this.tela.repaint();
             i++;
         }
@@ -114,18 +113,19 @@ public class Janela extends JFrame implements Observer {
 
     public static void main(String[] args) throws InterruptedException {
         Janela janela = new Janela("ECOZ");
+        //janela.subir_elevador(1);
         /*while (true) {
-            for (int i = 0; i < 2; i++) {
-                janela.subir_elevador(1);
-                janela.embarca_elevador(janela.elevador_anim);
-                janela.sobe_elevador(1);
-                janela.desembarca_elevador(janela.elevador_anim);
-                Thread.currentThread().sleep(500);
-            }
-            for (int i = 0; i < 4; i++) {
-                janela.desce_elevador(1);
-                Thread.currentThread().sleep(500);
-            }
+        for (int i = 0; i < 2; i++) {
+        janela.subir_elevador(1);
+        janela.embarca_elevador(janela.elevador_anim);
+        janela.sobe_elevador(1);
+        janela.desembarca_elevador(janela.elevador_anim);
+        Thread.currentThread().sleep(500);
+        }
+        for (int i = 0; i < 4; i++) {
+        janela.desce_elevador(1);
+        Thread.currentThread().sleep(500);
+        }
         }*/
     }
 
@@ -133,7 +133,7 @@ public class Janela extends JFrame implements Observer {
     public void update(Observable arg0, Object arg1) {
         IElevador elev = (IElevador) arg0;
 
-        switch (Ações.descobreAção(arg1)) {
+        switch (MensagensElevador.descobreAção(arg1)) {
             case SOBE:
                 subir_elevador(1);
                 break;
@@ -142,6 +142,19 @@ public class Janela extends JFrame implements Observer {
                 break;
             case EMBARQUE:
                 embarca_elevador(elevador_anim);
+                break;
+            case DESEMBARQUE:
+                desembarca_elevador(elevador_anim);
+                break;
+            case ABRIR_PORTA:
+                elev.abre_porta();
+                break;
+            case FECHAR_PORTA:
+                elev.fecha_porta();
+                break;
+            case DESLIGA:
+                elev.desliga();
         }
+
     }
 }

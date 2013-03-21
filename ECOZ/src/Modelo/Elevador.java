@@ -38,18 +38,18 @@ public class Elevador extends IElevador {
     @Override
     public void abre_porta() {
         setChanged();
-        notifyObservers(Ações.ABRIR_PORTA);
+        notifyObservers(MensagensElevador.ABRIR_PORTA);
     }
 
     @Override
     public void fecha_porta() {
         setChanged();
-        notifyObservers(Ações.FECHAR_PORTA);
+        notifyObservers(MensagensElevador.FECHAR_PORTA);
     }
 
     public void desliga() {
         setChanged();
-        notifyObservers(Ações.DESLIGA);
+        notifyObservers(MensagensElevador.DESLIGA);
         controlador.interrupt();
     }
 
@@ -62,29 +62,27 @@ public class Elevador extends IElevador {
     public void incrementa_quant_embarcados() {
         setChanged();
         num_pessoas++;
-        notifyObservers(Ações.EMBARQUE);
+        notifyObservers(MensagensElevador.EMBARQUE);
     }
 
     @Override
     public void decrementa_quant_embarcados() {
         setChanged();
         num_pessoas--;
-        notifyObservers(Ações.DESEMBARQUE);
+        notifyObservers(MensagensElevador.DESEMBARQUE);
     }
 
     @Override
     public void sobeAndar() {
         setChanged();
-        assert andarAtual < prédio.quantAndares();
         this.andarAtual++;
-        notifyObservers(Ações.SOBE);
+        notifyObservers(MensagensElevador.SOBE);
     }
 
     @Override
     public void desceAndar() {
         setChanged();
-        assert andarAtual >= 0;
         this.andarAtual--;
-        notifyObservers(Ações.DESCE);
+        notifyObservers(MensagensElevador.DESCE);
     }
 }
