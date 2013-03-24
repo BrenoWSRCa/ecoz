@@ -2,7 +2,6 @@ package Visualização;
 
 import Controle.ControladorDeElevador;
 import Modelo.MensagensElevador;
-import Modelo.Direção;
 import Modelo.IElevador;
 import Modelo.Prédio;
 import java.util.Observable;
@@ -15,7 +14,7 @@ public class Janela extends JFrame implements Observer {
     Tela tela;
     Modelo.IElevador elevador;
     Animacao elevador_anim;
-    Imagem predio;
+    Imagem prédio_anim;
 
     public Janela(String nome) {
         super(nome);
@@ -27,16 +26,20 @@ public class Janela extends JFrame implements Observer {
         this.setResizable(false);
 
         tela = new Tela();
-        predio = new Imagem(Constantes.PREDIO, 0, 0);
-        predio.setSize(Constantes.LARGURA_DA_JANELA, Constantes.ALTURA_DA_JANELA);
-        elevador_anim = new Animacao(Constantes.ELEVADOR, 4, 51, 387, 383);
-        tela.adiciona_Desenhavel(predio);
+        prédio_anim = new Imagem(Constantes.PREDIO, 0, 0);
+
+        elevador_anim = new Animacao(Constantes.ELEVADOR, 23, 513, 457);
+        
+        tela.adiciona_Desenhavel(prédio_anim);
         tela.adiciona_Desenhavel(elevador_anim);
+        System.out.println();
+        tela.escala(((float)Constantes.LARGURA_DA_JANELA)/prédio_anim.retornaLargura(),
+                    ((float)Constantes.ALTURA_DA_JANELA)/prédio_anim.retornaAltura());
         String andares[] = {"Térreo", "Primeiro", "Segundo", "Terceiro"};
-        Prédio predio = new Prédio(andares);
-        elevador = new Modelo.Elevador(predio);
+        Prédio prédio = new Prédio(andares);
+        elevador = new Modelo.Elevador(prédio);
         elevador.addObserver(this);
-        //new ControladorDeElevador(elevador, predio, "Teste").start();
+        new ControladorDeElevador(elevador, prédio, "Teste").start();
         this.add(tela);
         tela.repaint();
     }
@@ -113,6 +116,9 @@ public class Janela extends JFrame implements Observer {
 
     public static void main(String[] args) throws InterruptedException {
         Janela janela = new Janela("ECOZ");
+        //janela.subir_elevador(1);
+        //janela.desce_elevador(1);
+        //janela.subir_elevador(1);
         //janela.subir_elevador(1);
         /*while (true) {
         for (int i = 0; i < 2; i++) {

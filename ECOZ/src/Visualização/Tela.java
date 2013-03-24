@@ -10,9 +10,12 @@ import javax.swing.JPanel;
 public class Tela extends JPanel {
 	
 	private List<Desenhavel> listaDeImagens;
+        float escala_largura, escala_altura;
 
     public Tela() {
     	listaDeImagens = new LinkedList<Desenhavel>();
+        this.escala_largura = 1;
+        this.escala_altura = 1;
     	this.setSize(600, 500);
     }
  
@@ -25,7 +28,7 @@ public class Tela extends JPanel {
     }
     
     public void adiciona_Animacao(String i, int quadros, int largura, int x, int y){
-        listaDeImagens.add(new Animacao(i,quadros, largura, x, y));
+        listaDeImagens.add(new Animacao(i,quadros, x, y));
     }
     
     Imagem[] vetor_de_Imagens(){
@@ -46,11 +49,16 @@ public class Tela extends JPanel {
     	System.out.format("Tentando pegar imagem de posição inválida de vetor de imagens!");
     	return null;
     }
-
+    public void escala(float escala_largura, float escala_altura){
+        this.escala_altura = escala_altura;
+        this.escala_largura = escala_largura;
+    }
+    
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
+        g2d.scale(escala_altura, escala_largura);
         for(Desenhavel i: listaDeImagens)
             i.desenhar(g2d);
     }

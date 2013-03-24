@@ -5,14 +5,14 @@ import java.awt.Graphics2D;
 import javax.swing.ImageIcon;
 
 public class Animacao extends Desenhavel {
-	protected int quadros, largura, i;
+	protected int quadros, i;
 	ImageIcon img;
-	Animacao(String n, int quadros, int largura, int x, int y){
+	Animacao(String n, int quadros, int x, int y){
 		img = new ImageIcon(n);
 		this.x = x;
 		this.y = y;
 		this.quadros = quadros;
-		this.largura = largura;
+		this.largura = img.getIconWidth()/quadros;
 		i = 0;
 	}
 	
@@ -29,9 +29,15 @@ public class Animacao extends Desenhavel {
 	@Override
 	public void desenhar(Graphics2D g) {
 		g.translate(x, y);
-		g.setClip(0, 0, largura, img.getIconWidth());
+		g.setClip(0, 0, largura, img.getIconHeight());
 		g.drawImage(img.getImage(), -i*largura, 0, null);
 
 	}
 
+    @Override
+    public void setSize(int largura, int altura) {
+        this.largura = largura;
+        this.altura = altura;
+        this.largura = this.largura/this.quadros;
+    }
 }
