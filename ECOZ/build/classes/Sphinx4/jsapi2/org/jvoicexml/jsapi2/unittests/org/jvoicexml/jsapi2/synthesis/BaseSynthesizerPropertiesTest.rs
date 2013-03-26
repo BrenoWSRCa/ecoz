@@ -1,0 +1,1 @@
+org.jvoicexml.jsapi2.synthesis.BaseSynthesizerPropertiesTest

@@ -1,0 +1,1 @@
+javax.speech.recognition.RuleComponent

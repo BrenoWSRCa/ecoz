@@ -1,0 +1,190 @@
+#############################################################################
+## Copyright (c) 1996, Carnegie Mellon University, Cambridge University,
+## Ronald Rosenfeld and Philip Clarkson
+## Version 3, Copyright (c) 2006, Carnegie Mellon University 
+## Contributors includes Wen Xu, Ananlada Chotimongkol, 
+## David Huggins-Daines, Arthur Chan and Alan Black 
+#############################################################################
+=============================================================================
+===============  This file was produced by the CMU-Cambridge  ===============
+===============     Statistical Language Modeling Toolkit     ===============
+=============================================================================
+This is a 3-gram language model, based on a vocabulary of 17 words,
+  which begins "</s>", "<s>", "abrir"...
+This is a CLOSED-vocabulary model
+  (OOVs eliminated from training data and are forbidden in test data)
+Good-Turing discounting was applied.
+1-gram frequency of frequency : 2 
+2-gram frequency of frequency : 17 14 5 1 0 0 0 
+3-gram frequency of frequency : 39 19 5 1 0 0 0 
+1-gram discounting ratios : 0.67 
+2-gram discounting ratios : 
+3-gram discounting ratios : 0.97 0.33 0.18 
+This file is in the ARPA-standard format introduced by Doug Paul.
+
+p(wd3|wd1,wd2)= if(trigram exists)           p_3(wd1,wd2,wd3)
+                else if(bigram w1,w2 exists) bo_wt_2(w1,w2)*p(wd3|wd2)
+                else                         p(wd3|w2)
+
+p(wd2|wd1)= if(bigram exists) p_2(wd1,wd2)
+            else              bo_wt_1(wd1)*p_1(wd2)
+
+All probs and back-off weights (bo_wt) are given in log10 form.
+
+Data formats:
+
+Beginning of data mark: \data\
+ngram 1=nr            # number of 1-grams
+ngram 2=nr            # number of 2-grams
+ngram 3=nr            # number of 3-grams
+
+\1-grams:
+p_1     wd_1 bo_wt_1
+\2-grams:
+p_2     wd_1 wd_2 bo_wt_2
+\3-grams:
+p_3     wd_1 wd_2 wd_3 
+
+end of data mark: \end\
+
+\data\
+ngram 1=17
+ngram 2=43
+ngram 3=69
+
+\1-grams:
+-0.7045 </s>	-1.4062
+-0.6907 <s>	-1.3182
+-1.8949 abrir	-0.4659
+-1.1167 andar	-1.0506
+-1.2417 buscar	-0.8253
+-2.3720 correto	-0.2055
+-0.8157 elevador	-1.2106
+-2.3720 emergência	0.0000
+-2.3720 errado	-0.2055
+-1.8949 fechar	-0.4659
+-1.2417 levar	-0.8723
+-1.2417 para	-0.8253
+-1.5938 porta	-0.6826
+-1.4969 primeiro	-0.6392
+-1.4969 quarto	-0.6392
+-1.4177 segundo	-0.7061
+-1.4969 terceiro	-0.6392
+
+\2-grams:
+-0.0138 </s> <s> 0.2091
+-1.5185 <s> abrir -1.0669
+-0.1383 <s> elevador -0.7482
+-1.5185 <s> fechar -1.0669
+-1.5185 <s> para -1.4983
+-1.5185 <s> primeiro -1.3680
+-1.5185 <s> quarto -1.3680
+-1.2175 <s> segundo 0.0720
+-1.5185 <s> terceiro -1.3680
+-0.1761 abrir porta 0.6071
+-0.0322 andar </s> 0.3912
+-1.0000 buscar </s> -0.0389
+-0.6990 buscar primeiro -0.7659
+-0.6990 buscar quarto -0.7659
+-0.6990 buscar segundo -0.6990
+-0.6990 buscar terceiro -0.7659
+-0.3010 correto </s> -0.0389
+-1.3979 elevador </s> -0.0389
+-1.3979 elevador abrir -1.0669
+-0.4437 elevador buscar 0.7801
+-1.3979 elevador correto -1.2430
+-1.3979 elevador emergência -1.4485
+-1.3979 elevador errado -1.2430
+-1.3979 elevador fechar -1.0669
+-0.4437 elevador levar -1.4983
+-0.3010 errado </s> -0.0389
+-0.1761 fechar porta 0.6071
+-1.0000 levar </s> -0.0389
+-0.0969 levar para 0.5279
+-1.0000 para </s> -0.0389
+-0.6990 para primeiro 0.1300
+-0.6990 para quarto 0.1300
+-0.6990 para segundo 0.0720
+-0.6990 para terceiro 0.1300
+-0.0792 porta </s> 0.8062
+-0.4771 primeiro </s> 1.3341
+-0.3010 primeiro andar 1.0584
+-0.4771 quarto </s> 1.3341
+-0.3010 quarto andar 1.0584
+-0.3680 segundo </s> 1.4174
+-0.3680 segundo andar 1.0584
+-0.4771 terceiro </s> 1.3341
+-0.3010 terceiro andar 1.0584
+
+\3-grams:
+-1.5040 </s> <s> abrir 
+-0.1296 </s> <s> elevador 
+-1.5040 </s> <s> fechar 
+-1.5040 </s> <s> para 
+-1.5040 </s> <s> primeiro 
+-1.5040 </s> <s> quarto 
+-1.6777 </s> <s> segundo 
+-1.5040 </s> <s> terceiro 
+-0.0126 <s> abrir porta 
+-1.3928 <s> elevador </s> 
+-1.3928 <s> elevador abrir 
+-0.4260 <s> elevador buscar 
+-1.3928 <s> elevador correto 
+-1.3928 <s> elevador emergência 
+-1.3928 <s> elevador errado 
+-1.3928 <s> elevador fechar 
+-0.4260 <s> elevador levar 
+-0.0126 <s> fechar porta 
+-0.0126 <s> para </s> 
+-0.0126 <s> primeiro </s> 
+-0.0126 <s> quarto </s> 
+-0.4874 <s> segundo </s> 
+-0.0126 <s> terceiro </s> 
+-0.4874 abrir porta </s> 
+-0.0348 andar </s> <s> 
+-0.0126 buscar </s> <s> 
+-0.3136 buscar primeiro </s> 
+-0.3136 buscar primeiro andar 
+-0.3136 buscar quarto </s> 
+-0.3136 buscar quarto andar 
+-0.3136 buscar segundo </s> 
+-0.3136 buscar segundo andar 
+-0.3136 buscar terceiro </s> 
+-0.3136 buscar terceiro andar 
+-0.0126 correto </s> <s> 
+-0.0126 elevador </s> <s> 
+-0.0126 elevador abrir porta 
+-0.9668 elevador buscar </s> 
+-1.1406 elevador buscar primeiro 
+-1.1406 elevador buscar quarto 
+-1.1406 elevador buscar segundo 
+-1.1406 elevador buscar terceiro 
+-0.0126 elevador correto </s> 
+-0.0126 elevador emergência </s> 
+-0.0126 elevador errado </s> 
+-0.0126 elevador fechar porta 
+-0.9668 elevador levar </s> 
+-0.0512 elevador levar para 
+-0.0126 errado </s> <s> 
+-0.4874 fechar porta </s> 
+-0.0126 levar </s> <s> 
+-1.0894 levar para primeiro 
+-1.0894 levar para quarto 
+-1.0894 levar para segundo 
+-1.0894 levar para terceiro 
+-0.0126 para </s> <s> 
+-0.4874 para primeiro andar 
+-0.4874 para quarto andar 
+-0.4874 para segundo andar 
+-0.4874 para terceiro andar 
+-0.0969 porta </s> <s> 
+-0.4874 primeiro </s> <s> 
+-0.7379 primeiro andar </s> 
+-0.4874 quarto </s> <s> 
+-0.7379 quarto andar </s> 
+-0.7379 segundo </s> <s> 
+-0.7379 segundo andar </s> 
+-0.4874 terceiro </s> <s> 
+-0.7379 terceiro andar </s> 
+
+\end\

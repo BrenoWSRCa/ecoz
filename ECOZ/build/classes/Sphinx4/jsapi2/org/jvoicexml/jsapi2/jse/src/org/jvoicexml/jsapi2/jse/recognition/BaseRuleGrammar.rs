@@ -1,0 +1,9 @@
+org.jvoicexml.jsapi2.jse.recognition.BaseRuleGrammar$RootSetterOperation
+org.jvoicexml.jsapi2.jse.recognition.BaseRuleGrammar$InternalRuleIdComparator
+org.jvoicexml.jsapi2.jse.recognition.BaseRuleGrammar$GrammarEnablerOperation
+org.jvoicexml.jsapi2.jse.recognition.BaseRuleGrammar$AddRuleOperation
+org.jvoicexml.jsapi2.jse.recognition.BaseRuleGrammar$RuleGrammarOperation
+org.jvoicexml.jsapi2.jse.recognition.BaseRuleGrammar$RuleEnablerOperation
+org.jvoicexml.jsapi2.jse.recognition.BaseRuleGrammar$InternalRule
+org.jvoicexml.jsapi2.jse.recognition.BaseRuleGrammar
+org.jvoicexml.jsapi2.jse.recognition.BaseRuleGrammar$RemoveRuleOperation

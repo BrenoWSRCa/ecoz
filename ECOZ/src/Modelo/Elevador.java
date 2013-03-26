@@ -50,7 +50,6 @@ public class Elevador extends IElevador {
     public void desliga() {
         setChanged();
         notifyObservers(MensagensElevador.DESLIGA);
-        controlador.interrupt();
     }
 
     @Override

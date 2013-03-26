@@ -1,12 +1,18 @@
 package Visualização;
 
+import Controle.Antigo_ControladorDeElevador;
 import Controle.ControladorDeElevador;
+import Controle.Voz.ControladorVoz;
 import Modelo.MensagensElevador;
 import Modelo.IElevador;
 import Modelo.Prédio;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class Janela extends JFrame implements Observer {
@@ -15,8 +21,10 @@ public class Janela extends JFrame implements Observer {
     Modelo.IElevador elevador;
     Animacao elevador_anim;
     Imagem prédio_anim;
+    Som chegaAndar;
+    private Som andaresAudio[];
 
-    public Janela(String nome) {
+    public Janela(String nome) throws FileNotFoundException, IOException {
         super(nome);
         this.setSize(Constantes.LARGURA_DA_JANELA, Constantes.ALTURA_DA_JANELA);
 
@@ -28,7 +36,8 @@ public class Janela extends JFrame implements Observer {
         tela = new Tela();
         prédio_anim = new Imagem(Constantes.PREDIO, 0, 0);
 
-        elevador_anim = new Animacao(Constantes.ELEVADOR, 23, 513, 457);
+        elevador_anim = new Animacao(Constantes.ELEVADOR, Constantes.NUM_TOTAL_QUADROS,
+                                     Constantes.POS_X_INI_ELEVADOR, Constantes.POS_Y_INI_ELEVADOR);
         
         tela.adiciona_Desenhavel(prédio_anim);
         tela.adiciona_Desenhavel(elevador_anim);
@@ -36,11 +45,20 @@ public class Janela extends JFrame implements Observer {
         tela.escala(((float)Constantes.LARGURA_DA_JANELA)/prédio_anim.retornaLargura(),
                     ((float)Constantes.ALTURA_DA_JANELA)/prédio_anim.retornaAltura());
         String andares[] = {"Térreo", "Primeiro", "Segundo", "Terceiro"};
+        
+        andaresAudio = new Som[4];
+        andaresAudio[0] = new Som("sons/primeiro andar.wav");
+        andaresAudio[1] = new Som("sons/segundo andar.wav");
+        andaresAudio[2] = new Som("sons/terceiro andar.wav");
+        andaresAudio[3] = new Som("sons/quarto andar.wav");
+        
         Prédio prédio = new Prédio(andares);
         elevador = new Modelo.Elevador(prédio);
         elevador.addObserver(this);
-        new ControladorDeElevador(elevador, prédio, "Teste").start();
+        new ControladorVoz(new ControladorDeElevador(elevador, prédio, "Teste")).start();
+        //new Antigo_ControladorDeElevador(elevador, prédio, "Teste").start();
         this.add(tela);
+        chegaAndar = new Som("ding.wav");
         tela.repaint();
     }
 
@@ -87,6 +105,7 @@ public class Janela extends JFrame implements Observer {
         int i = 0;
         elevador.escolhe_quadro(Constantes.QUADRO_EMBARQUE);
         this.tela.repaint();
+        chegaAndar.play();
         while (i < Constantes.NUM_DE_QUADROS_EMBARQUE - 1) {
             try {
                 Thread.currentThread().sleep(delta);
@@ -95,6 +114,7 @@ public class Janela extends JFrame implements Observer {
             this.tela.repaint();
             i++;
         }
+        andaresAudio[this.elevador.qual_andar()].play();
     }
 
     public void desembarca_elevador(Animacao elevador) {
@@ -102,7 +122,7 @@ public class Janela extends JFrame implements Observer {
         int i = 0;
         elevador.escolhe_quadro(Constantes.QUADRO_DESEMBARQUE);
         this.tela.repaint();
-
+        chegaAndar.play();
         while (i < Constantes.NUM_DE_QUADROS_DESEMBARQUE - 1) {
             try {
                 Thread.currentThread().sleep(delta);
@@ -112,9 +132,10 @@ public class Janela extends JFrame implements Observer {
             this.tela.repaint();
             i++;
         }
+        andaresAudio[this.elevador.qual_andar()].play();
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, FileNotFoundException, IOException {
         Janela janela = new Janela("ECOZ");
         //janela.subir_elevador(1);
         //janela.desce_elevador(1);

@@ -58,7 +58,7 @@ public class Tela extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.scale(escala_altura, escala_largura);
+        g2d.scale(escala_largura, escala_altura);
         for(Desenhavel i: listaDeImagens)
             i.desenhar(g2d);
     }

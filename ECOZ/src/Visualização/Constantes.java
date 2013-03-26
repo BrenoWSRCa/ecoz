@@ -16,7 +16,10 @@ public interface Constantes {
 		QUADRO_EMBARQUE            =   0,
 		QUADRO_DESEMBARQUE         =  22,
 		NUM_DE_QUADROS_EMBARQUE    =  23,
-		NUM_DE_QUADROS_DESEMBARQUE =  23;
+		NUM_DE_QUADROS_DESEMBARQUE =  23,
+                NUM_TOTAL_QUADROS          =  23,
+                POS_X_INI_ELEVADOR         = 513,
+                POS_Y_INI_ELEVADOR         = 457;
 	
 	String	PREDIO   = "predio_01.png",
 		ELEVADOR = "elevador2.png";
